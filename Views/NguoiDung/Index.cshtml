@@ -1,0 +1,53 @@
+@model IEnumerable<QuanLyThuVien.Models.NguoiDung>
+@{
+    ViewData["Title"] = "Quản lý Nhân viên";
+}
+
+<h3>Danh sách Nhân viên</h3>
+
+@if (TempData["ThongBao"] != null)
+{
+    <div class="alert alert-success">@TempData["ThongBao"]</div>
+}
+@if (TempData["Loi"] != null)
+{
+    <div class="alert alert-danger">@TempData["Loi"]</div>
+}
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Thêm nhân viên</a>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Họ tên</th>
+            <th>Tên đăng nhập</th>
+            <th>Vai trò</th>
+            <th style="width: 180px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.HoTen</td>
+                <td>@item.TenDangNhap</td>
+                <td>
+                    @if (item.VaiTro == QuanLyThuVien.Models.VaiTro.Admin)
+                    {
+                        <span class="badge bg-danger">Admin</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Thủ thư</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

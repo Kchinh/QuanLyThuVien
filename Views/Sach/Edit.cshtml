@@ -1,0 +1,45 @@
+@model QuanLyThuVien.Models.ViewModels.SachViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Sửa Sách";
+}
+
+<h3>Sửa thông tin Sách</h3>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="TenSach" class="form-label"></label>
+        <input asp-for="TenSach" class="form-control" />
+        <span asp-validation-for="TenSach" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TacGia" class="form-label"></label>
+        <input asp-for="TacGia" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TheLoaiId" class="form-label">Thể loại</label>
+        <select asp-for="TheLoaiId" class="form-select"
+                asp-items="@(new SelectList(Model.DanhSachTheLoai, "Id", "TenTheLoai"))">
+        </select>
+        <span asp-validation-for="TheLoaiId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SoLuong" class="form-label">Tổng số lượng</label>
+        <input asp-for="SoLuong" class="form-control" type="number" min="1" />
+        <span asp-validation-for="SoLuong" class="text-danger"></span>
+        <small class="text-muted">Nếu tăng số lượng, phần chênh lệch sẽ tự động cộng vào số sách còn lại để cho mượn.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

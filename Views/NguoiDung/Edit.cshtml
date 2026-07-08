@@ -1,0 +1,44 @@
+@model QuanLyThuVien.Models.ViewModels.NguoiDungViewModel
+@{
+    ViewData["Title"] = "Sửa Nhân viên";
+}
+
+<h3>Sửa tài khoản Nhân viên</h3>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="HoTen" class="form-label"></label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TenDangNhap" class="form-label">Tên đăng nhập</label>
+        <input asp-for="TenDangNhap" class="form-control" />
+        <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MatKhau" class="form-label">Mật khẩu mới</label>
+        <input asp-for="MatKhau" class="form-control" type="password" placeholder="Để trống nếu không đổi mật khẩu" />
+        <small class="text-muted">Để trống nếu không muốn đổi mật khẩu.</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VaiTro" class="form-label">Vai trò</label>
+        <select asp-for="VaiTro" class="form-select"
+                asp-items="Html.GetEnumSelectList<QuanLyThuVien.Models.VaiTro>()">
+        </select>
+        <span asp-validation-for="VaiTro" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

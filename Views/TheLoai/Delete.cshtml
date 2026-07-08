@@ -1,0 +1,15 @@
+@model QuanLyThuVien.Models.TheLoai
+@{
+    ViewData["Title"] = "Xóa Thể loại";
+}
+
+<h3>Xác nhận xóa</h3>
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa thể loại <strong>@Model.TenTheLoai</strong> không?
+</div>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

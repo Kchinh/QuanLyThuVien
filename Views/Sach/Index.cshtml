@@ -1,0 +1,65 @@
+@model IEnumerable<QuanLyThuVien.Models.Sach>
+@{
+    ViewData["Title"] = "Quản lý Sách";
+}
+
+<h3>Danh sách Sách</h3>
+
+@if (TempData["ThongBao"] != null)
+{
+    <div class="alert alert-success">@TempData["ThongBao"]</div>
+}
+@if (TempData["Loi"] != null)
+{
+    <div class="alert alert-danger">@TempData["Loi"]</div>
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <a asp-action="Create" class="btn btn-primary">+ Thêm sách</a>
+
+    <form asp-action="Index" method="get" class="d-flex" style="width: 350px">
+        <input type="text" name="keyword" value="@ViewBag.Keyword"
+               class="form-control me-2" placeholder="Tìm theo tên sách/tác giả..." />
+        <button type="submit" class="btn btn-outline-secondary">Tìm</button>
+    </form>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Thể loại</th>
+            <th>Tổng số</th>
+            <th>Còn lại</th>
+            <th style="width: 180px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TenSach</td>
+                <td>@item.TacGia</td>
+                <td>@item.TheLoai?.TenTheLoai</td>
+                <td>@item.SoLuong</td>
+                <td>
+                    @if (item.SoLuongConLai == 0)
+                    {
+                        <span class="badge bg-danger">Hết sách</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">@item.SoLuongConLai</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
