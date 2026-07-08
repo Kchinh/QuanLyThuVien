@@ -1,0 +1,61 @@
+@model QuanLyThuVien.Models.ViewModels.LapPhieuMuonViewModel
+@{
+    ViewData["Title"] = "Lập phiếu mượn";
+}
+
+<h3>Lập phiếu mượn sách</h3>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="DocGiaId" class="form-label">Độc giả</label>
+                <select asp-for="DocGiaId" class="form-select"
+                        asp-items="@(new SelectList(Model.DanhSachDocGia, "Id", "HoTen"))">
+                    <option value="">-- Chọn độc giả --</option>
+                </select>
+                <span asp-validation-for="DocGiaId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="NgayHenTra" class="form-label">Ngày hẹn trả</label>
+                <input asp-for="NgayHenTra" class="form-control" type="date" />
+                <span asp-validation-for="NgayHenTra" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <label class="form-label">Chọn sách muốn mượn (chỉ hiện sách còn hàng)</label>
+            <span asp-validation-for="SachIds" class="text-danger d-block"></span>
+
+            <div class="border rounded p-2" style="max-height: 350px; overflow-y: auto;">
+                @if (!Model.DanhSachSachCoSan.Any())
+                {
+                    <p class="text-muted mb-0">Hiện không có sách nào còn hàng để cho mượn.</p>
+                }
+                @foreach (var sach in Model.DanhSachSachCoSan)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               name="SachIds" value="@sach.Id" id="sach_@sach.Id" />
+                        <label class="form-check-label" for="sach_@sach.Id">
+                            @sach.TenSach — @sach.TacGia
+                            <span class="text-success">(còn @sach.SoLuongConLai)</span>
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Lập phiếu mượn</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Hủy</a>
+</form>
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

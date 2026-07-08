@@ -1,0 +1,70 @@
+@model QuanLyThuVien.Models.PhieuMuon
+@{
+    ViewData["Title"] = "Chi tiết Phiếu mượn";
+}
+
+<h3>Chi tiết Phiếu mượn #@Model.Id</h3>
+
+@if (TempData["ThongBao"] != null)
+{
+    <div class="alert alert-success">@TempData["ThongBao"]</div>
+}
+@if (TempData["Loi"] != null)
+{
+    <div class="alert alert-danger">@TempData["Loi"]</div>
+}
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <p><strong>Độc giả:</strong> @Model.DocGia?.HoTen</p>
+        <p><strong>Ngày mượn:</strong> @Model.NgayMuon.ToString("dd/MM/yyyy")</p>
+    </div>
+    <div class="col-md-6">
+        <p><strong>Ngày hẹn trả:</strong> @Model.NgayHenTra.ToString("dd/MM/yyyy")</p>
+        <p><strong>Trạng thái:</strong>
+            @(Model.TrangThai == QuanLyThuVien.Models.TrangThaiPhieuMuon.DaTraHet ? "Đã trả hết" : "Đang mượn")
+        </p>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Ngày trả</th>
+            <th style="width: 140px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ct in Model.ChiTietPhieuMuons)
+        {
+            <tr>
+                <td>@ct.Sach?.TenSach</td>
+                <td>@ct.Sach?.TacGia</td>
+                <td>
+                    @if (ct.NgayTraThucTe == null)
+                    {
+                        <span class="badge bg-warning text-dark">Chưa trả</span>
+                    }
+                    else
+                    {
+                        <span>@ct.NgayTraThucTe.Value.ToString("dd/MM/yyyy")</span>
+                    }
+                </td>
+                <td>
+                    @if (ct.NgayTraThucTe == null)
+                    {
+                        <form asp-action="TraSach" method="post" class="d-inline">
+                            <input type="hidden" name="chiTietPhieuMuonId" value="@ct.Id" />
+                            <input type="hidden" name="phieuMuonId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Xác nhận trả</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>

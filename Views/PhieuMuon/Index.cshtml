@@ -1,0 +1,62 @@
+@model IEnumerable<QuanLyThuVien.Models.PhieuMuon>
+@{
+    ViewData["Title"] = "Quản lý Mượn/Trả sách";
+}
+
+<h3>Danh sách Phiếu mượn</h3>
+
+@if (TempData["ThongBao"] != null)
+{
+    <div class="alert alert-success">@TempData["ThongBao"]</div>
+}
+@if (TempData["Loi"] != null)
+{
+    <div class="alert alert-danger">@TempData["Loi"]</div>
+}
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Lập phiếu mượn mới</a>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Độc giả</th>
+            <th>Ngày mượn</th>
+            <th>Ngày hẹn trả</th>
+            <th>Số sách</th>
+            <th>Trạng thái</th>
+            <th style="width: 120px">Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var quaHan = item.TrangThai == QuanLyThuVien.Models.TrangThaiPhieuMuon.DangMuon
+                         && item.NgayHenTra.Date < DateTime.Now.Date;
+            <tr class="@(quaHan ? "table-danger" : "")">
+                <td>@item.Id</td>
+                <td>@item.DocGia?.HoTen</td>
+                <td>@item.NgayMuon.ToString("dd/MM/yyyy")</td>
+                <td>@item.NgayHenTra.ToString("dd/MM/yyyy")</td>
+                <td>@item.ChiTietPhieuMuons.Count</td>
+                <td>
+                    @if (item.TrangThai == QuanLyThuVien.Models.TrangThaiPhieuMuon.DaTraHet)
+                    {
+                        <span class="badge bg-success">Đã trả hết</span>
+                    }
+                    else if (quaHan)
+                    {
+                        <span class="badge bg-danger">Quá hạn</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Đang mượn</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Xem</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
