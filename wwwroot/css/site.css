@@ -1,0 +1,269 @@
+/* ===== Import font từ Google Fonts ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+/* ===== Design Tokens ===== */
+:root {
+  --mau-chinh: #1F3D2B;      /* Xanh rêu đậm - gáy sách */
+  --mau-chinh-dam: #16291D;
+  --mau-nhan: #B8860B;        /* Vàng đồng */
+  --mau-nhan-nhat: #E8D9A8;
+  --mau-nen: #FAF8F3;         /* Trắng ngà - trang giấy */
+  --mau-chu: #2B2B26;
+  --font-tieu-de: 'Playfair Display', Georgia, serif;
+  --font-noi-dung: 'Inter', -apple-system, sans-serif;
+  --font-so-lieu: 'IBM Plex Mono', monospace;
+}
+
+body {
+  background-color: var(--mau-nen);
+  font-family: var(--font-noi-dung);
+  color: var(--mau-chu);
+}
+
+h1, h2, h3, h4, .card-title, .navbar-brand {
+  font-family: var(--font-tieu-de);
+  color: var(--mau-chinh);
+}
+
+/* ===== Navbar: gáy sách xanh rêu, chữ ngà, gạch chân vàng đồng khi hover ===== */
+.navbar {
+  background-color: var(--mau-chinh) !important;
+  border-bottom: 3px solid var(--mau-nhan);
+}
+.navbar-brand {
+  color: var(--mau-nen) !important;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.navbar .nav-link {
+  color: rgba(250, 248, 243, 0.85) !important;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.2s ease;
+}
+.navbar .nav-link:hover {
+  color: var(--mau-nhan-nhat) !important;
+}
+.navbar .nav-link.active::after,
+.navbar .nav-link:hover::after {
+  content: '';
+  position: absolute;
+  left: 0.5rem; right: 0.5rem; bottom: -2px;
+  height: 2px;
+  background: var(--mau-nhan);
+}
+
+/* ===== Nút bấm ===== */
+.btn-primary {
+  background-color: var(--mau-chinh);
+  border-color: var(--mau-chinh);
+}
+.btn-primary:hover {
+  background-color: var(--mau-chinh-dam);
+  border-color: var(--mau-chinh-dam);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--mau-nhan);
+  border-color: var(--mau-nhan);
+  color: white;
+}
+
+/* ===== Bảng dữ liệu: gọn gàng, tiêu đề đậm ===== */
+.table thead.table-light th {
+  background-color: var(--mau-nhan-nhat);
+  color: var(--mau-chinh-dam);
+  font-weight: 600;
+  border-bottom: 2px solid var(--mau-nhan);
+}
+.table-hover tbody tr:hover {
+  background-color: rgba(184, 134, 11, 0.06);
+}
+
+/* ===== Signature: Thẻ mục lục (Card Catalog Tab) - chỉ dùng cho Dashboard ===== */
+.the-muc-luc {
+  position: relative;
+  background: white;
+  border: 1px solid rgba(31, 61, 43, 0.15);
+  border-radius: 4px;
+  padding: 1.5rem 1.25rem 1.25rem;
+  overflow: visible;
+}
+.the-muc-luc::before {
+  content: attr(data-nhan);
+  position: absolute;
+  top: -14px;
+  left: 16px;
+  background: var(--mau-nhan);
+  color: white;
+  font-family: var(--font-so-lieu);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.the-muc-luc .so-lieu {
+  font-family: var(--font-so-lieu);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--mau-chinh);
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+.the-muc-luc .nhan-so-lieu {
+  color: #6b6b60;
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+/* ===== Badge trạng thái ===== */
+.badge.bg-warning { background-color: var(--mau-nhan) !important; }
+.badge.bg-success { background-color: var(--mau-chinh) !important; }
+
+/* ===== Trang đăng nhập ===== */
+.card.shadow {
+  border: none;
+  border-top: 4px solid var(--mau-nhan);
+}
+
+/* ===== Màn hình đăng nhập: split-screen, trống đồng làm hero ===== */
+.man-hinh-dang-nhap {
+  display: flex;
+  min-height: calc(100vh - 70px);
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: -1.5rem;
+}
+
+/* ===== Trống đồng: tông màu đồng cổ patina, thay cho bản xanh rêu cũ ===== */
+.cot-trong-dong {
+  flex: 1.3;
+  background:
+    radial-gradient(circle at center, #0F2027 0%, #1C2B33 55%, #0A1418 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ánh sáng hắt nhẹ mô phỏng bề mặt kim loại được chiếu sáng */
+.cot-trong-dong::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 35% 30%, rgba(212, 175, 100, 0.12), transparent 60%);
+  pointer-events: none;
+}
+
+.trong-dong-svg { width: 100%; max-width: 520px; height: auto; }
+
+/* Vành viền: ánh đồng mờ */
+.trong-dong-svg .vanh-vien {
+  fill: none;
+  stroke: rgba(196, 154, 91, 0.35);
+  stroke-width: 1;
+}
+
+/* Hoạ tiết (chim Lạc, răng cưa) và mắt xích: màu đồng/vàng kim sáng nổi trên nền tối */
+.trong-dong-svg .mau-nhan-fill { fill: #C9A24B; }
+.trong-dong-svg .vanh-mat-xich circle,
+.trong-dong-svg .vanh-mat-xich-nho circle {
+  fill: none;
+  stroke: #C9A24B;
+  stroke-width: 1.5;
+  opacity: 0.9;
+}
+
+/* Trung tâm: ngôi sao tỏa tia màu đỏ cam - đúng như ảnh tham khảo */
+.trong-dong-svg .mau-chinh-fill { fill: #E4572E; }
+.trong-dong-svg .tam-vien { fill: none; stroke: #F2B84B; stroke-width: 2; }
+
+.chu-thich-trong-dong {
+  margin-top: 2rem;
+  text-align: center;
+}
+.chu-thich-trong-dong .ten-he-thong {
+  display: block;
+  font-family: var(--font-tieu-de);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #E8D9A8;
+  letter-spacing: 1px;
+}
+.chu-thich-trong-dong .phu-de {
+  display: block;
+  font-family: var(--font-so-lieu);
+  font-size: 0.8rem;
+  color: #C9A24B;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.cot-dang-nhap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mau-nen);
+  padding: 2rem;
+}
+
+.khung-dang-nhap {
+  width: 100%;
+  max-width: 360px;
+}
+.khung-dang-nhap h3 {
+  font-family: var(--font-tieu-de);
+}
+
+/* Responsive: màn hình nhỏ thì xếp chồng, ẩn bớt trống đồng cho gọn */
+@media (max-width: 767px) {
+  .man-hinh-dang-nhap { flex-direction: column; }
+  .cot-trong-dong { padding: 2rem 1rem; min-height: 280px; }
+  .trong-dong-svg { max-width: 260px; }
+}
+
+/* ===== Biểu tượng chữ S Việt Nam - logo mark dùng chung ===== */
+.bieu-tuong-vn {
+  fill: var(--mau-nhan, #B8860B);
+  display: inline-block;
+}
+
+/* Kích thước khi dùng trong Navbar */
+.navbar-brand .bieu-tuong-vn {
+  width: 18px;
+  height: 54px;
+  margin-right: 8px;
+  vertical-align: middle;
+  fill: #E8D9A8;
+}
+
+/* Kích thước khi dùng ở trang Đăng nhập, cạnh tên hệ thống */
+.logo-dang-nhap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.logo-dang-nhap .bieu-tuong-vn {
+  width: 26px;
+  height: 78px;
+  fill: #C9A24B;
+}
+.logo-dang-nhap .ten-he-thong {
+  text-align: center;
+}
+
+/* Ẩn footer mặc định của template ở trang Đăng nhập (đã có "chữ thích" riêng trong hero) */
+body.trang-khong-footer footer {
+  display: none;
+}

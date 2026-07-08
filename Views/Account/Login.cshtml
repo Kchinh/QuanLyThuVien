@@ -1,0 +1,119 @@
+@model QuanLyThuVien.Models.ViewModels.DangNhapViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "_Layout";
+    ViewData["BodyClass"] = "trang-khong-footer";
+}
+
+<div class="man-hinh-dang-nhap">
+    <!-- CỘT TRÁI: Trống đồng Đông Sơn làm hero -->
+    <div class="cot-trong-dong">
+        <svg class="trong-dong-svg" viewBox="0 0 400 400" role="img" aria-label="Hoa văn mặt trống đồng Đông Sơn">
+            <defs>
+                <!-- 1 tia mặt trời -->
+                <path id="tia-nang" d="M200,60 L192,110 L208,110 Z" />
+                <!-- 1 hoạ tiết chim Lạc cách điệu -->
+                <g id="chim-lac">
+                    <path d="M0,0 Q-14,-10 -22,-2 Q-12,-4 -6,2 Q4,10 14,4 Q6,2 0,0 Z" />
+                    <circle cx="14" cy="2" r="2.5" />
+                </g>
+                <!-- 1 mắt xích hình học (vòng tròn tiếp tuyến) -->
+                <circle id="mat-xich" r="7" />
+                <!-- 1 răng cưa ngoài -->
+                <path id="rang-cua" d="M200,14 L193,30 L207,30 Z" />
+            </defs>
+
+            <!-- Các vành tròn đồng tâm (viền dẫn hướng) -->
+            <circle cx="200" cy="200" r="185" class="vanh-vien" />
+            <circle cx="200" cy="200" r="160" class="vanh-vien" />
+            <circle cx="200" cy="200" r="128" class="vanh-vien" />
+            <circle cx="200" cy="200" r="95" class="vanh-vien" />
+
+            <!-- Vành 1 (ngoài cùng): răng cưa -->
+            <g class="mau-nhan-fill">
+                @for (int i = 0; i < 32; i++)
+                {
+                    <use href="#rang-cua" transform="rotate(@(i * 11.25) 200 200)" />
+                }
+            </g>
+
+            <!-- Vành 2: chuỗi mắt xích hình học -->
+            <g class="vanh-mat-xich">
+                @for (int i = 0; i < 24; i++)
+                {
+                    double goc = i * 15 * Math.PI / 180;
+                    double x = 200 + 160 * Math.Sin(goc);
+                    double y = 200 - 160 * Math.Cos(goc);
+                    <use href="#mat-xich" x="@x.ToString("F1")" y="@y.ToString("F1")" />
+                }
+            </g>
+
+            <!-- Vành 3: chim Lạc bay vòng quanh (hoạ tiết đặc trưng nhất) -->
+            <g class="mau-nhan-fill">
+                @for (int i = 0; i < 14; i++)
+                {
+                    <use href="#chim-lac" transform="rotate(@(i * 25.7) 200 200) translate(200 72) scale(1.6)" />
+                }
+            </g>
+
+            <!-- Vành 4: hoa văn hình học nhỏ -->
+            <g class="vanh-mat-xich-nho">
+                @for (int i = 0; i < 20; i++)
+                {
+                    double goc = i * 18 * Math.PI / 180;
+                    double x = 200 + 95 * Math.Sin(goc);
+                    double y = 200 - 95 * Math.Cos(goc);
+                    <use href="#mat-xich" x="@x.ToString("F1")" y="@y.ToString("F1")" transform="scale(0.6)" style="transform-origin: @x.ToString("F1")px @y.ToString("F1")px" />
+                }
+            </g>
+
+            <!-- Trung tâm: Mặt trời 14 tia -->
+            <g class="mau-chinh-fill">
+                @for (int i = 0; i < 14; i++)
+                {
+                    <use href="#tia-nang" transform="rotate(@(i * 25.7) 200 200)" />
+                }
+            </g>
+            <circle cx="200" cy="200" r="18" class="mau-chinh-fill" />
+            <circle cx="200" cy="200" r="18" class="tam-vien" />
+        </svg>
+
+        <div class="chu-thich-trong-dong">
+            <div class="logo-dang-nhap">
+                @await Html.PartialAsync("_BieuTuongChuS")
+                <span class="ten-he-thong">QUẢN LÝ<br />THƯ VIỆN</span>
+            </div>
+            <span class="phu-de">Lưu giữ tri thức — Việt Nam</span>
+        </div>
+    </div>
+
+    <!-- CỘT PHẢI: Form đăng nhập -->
+    <div class="cot-dang-nhap">
+        <div class="khung-dang-nhap">
+            <h3 class="mb-1">Đăng nhập</h3>
+            <p class="text-muted mb-4">Vào hệ thống quản lý thư viện</p>
+
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="TenDangNhap" class="form-label"></label>
+                    <input asp-for="TenDangNhap" class="form-control" autofocus />
+                    <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="MatKhau" class="form-label"></label>
+                    <input asp-for="MatKhau" class="form-control" type="password" />
+                    <span asp-validation-for="MatKhau" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
