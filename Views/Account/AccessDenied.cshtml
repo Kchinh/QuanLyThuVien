@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Không có quyền truy cập";
+}
+
+<div class="alert alert-danger mt-4">
+    <h4>🚫 Bạn không có quyền truy cập chức năng này</h4>
+    <p>Chỉ tài khoản <strong>Admin</strong> mới được phép quản lý nhân viên.</p>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary mt-2">Quay lại Dashboard</a>
+</div>
