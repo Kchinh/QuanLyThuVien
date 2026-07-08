@@ -1,0 +1,16 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+
+## Database local
+*.mdf
+*.ldf
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Claude Code (local machine settings)
+.claude/
